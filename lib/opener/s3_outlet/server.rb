@@ -10,8 +10,7 @@ module Opener
     class Server < Sinatra::Base
 
       post '/' do
-        output = S3Output.new(:uuid => params[:request_id], :text => params[:input])
-        output.save
+        output = S3Output.create(:uuid => params[:request_id], :text => params[:input])
       end
 
       get '/' do
@@ -25,8 +24,7 @@ module Opener
       get '/:request_id' do
         unless params[:request_id] == 'favicon.ico'
           begin
-            s3_output = S3Output.new
-            output = s3_output.find(params[:request_id])
+            output = S3Output.find(params[:request_id])
 
             if output
               content_type(:xml)

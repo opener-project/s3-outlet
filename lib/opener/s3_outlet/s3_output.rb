@@ -2,26 +2,24 @@ module Opener
   class S3Outlet
     class S3Output
        attr_accessor :params, :bucket
-       
+       attr_reader :uuid, :text, :dir
+
        def initialize(params = {})
-         @params = params
-         
-         s3     = AWS::S3.new      
-         @bucket = s3.buckets[bucket_name]  
+         @uuid     = params.fetch(:uuid)
+         @text     = params.fetch(:text)
+         @dir      = params[:directory] || S3Outlet.dir
+         @bucket   = params[:bucket]    || S3Outlet.bucket
        end
-       
+
        def save
-         uuid     = params.fetch(:uuid)
-         text     = params.fetch(:text) 
-         filename = [uuid, ".kaf"].join
          object = bucket.objects[filename]
-                  
-         object.write(text)         
+         object.write(text)
        end
-       
-       def find(uuid)
-         filename = [uuid, ".kaf"].join
-         
+
+       def self.find(uuid, dir=nil, bucket=nil)
+         filename = construct_filename(uuid, dir)
+         bucket = bucket || default_bucket
+
          if bucket.objects[filename].exists?
            file = bucket.objects[filename]
            return file.read
@@ -29,11 +27,24 @@ module Opener
            return nil
          end
        end
-       
+
+       def self.create(params={})
+         new(params).save
+       end
+
+       def filename
+         self.class.construct_filename(uuid, dir)
+       end
+
        private
 
-       def bucket_name
-         return "opener-outlet"
+       def self.construct_filename(uuid, dir=nil)
+         dir = S3Outlet.dir if dir.nil? || dir.empty?
+         File.join(dir, "#{uuid}.kaf")
+       end
+
+       def self.default_bucket
+         S3Outlet.bucket
        end
     end
   end

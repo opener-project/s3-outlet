@@ -6,11 +6,21 @@ require_relative 's3_outlet/server'
 
 module Opener
   class S3Outlet
-    def run(input, uuid)
-      output = S3Output.new(:uuid=>uuid, :text=>input)
-      output.save
 
-      return input
+    def self.s3
+      @s3 ||= AWS::S3.new
+    end
+
+    def self.bucket
+      @bucket ||= s3.buckets[bucket_name]
+    end
+
+    def self.bucket_name
+      return "opener-outlet"
+    end
+
+    def self.dir
+      return "webservice"
     end
   end
 end
