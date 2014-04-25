@@ -1,4 +1,4 @@
-# S3-Outlet
+# S3-Outlet: Stores the results in an AWS S3 bucket.
 
 Component that stores results from the Opener Web Services chain into an S3
 bucket.
