@@ -1,14 +1,22 @@
+require 'uuidtools'
+
 module Opener
   class S3Outlet
     class S3Output
-       attr_accessor :params, :bucket
-       attr_reader :uuid, :text, :dir
+       #attr_accessor :params, :bucket
+       attr_reader :uuid, :text, :dir, :bucket, :params
 
        def initialize(params = {})
-         @uuid     = params.fetch(:uuid)
+         @uuid     = params.fetch(:uuid) { UUIDTools::UUID.random_create }
          @text     = params.fetch(:text)
-         @dir      = params[:directory] || S3Outlet.dir
-         @bucket   = params[:bucket]    || S3Outlet.bucket
+         @dir      = params.fetch(:directory, S3Outlet.dir)
+
+         bucket = params[:bucket]
+         if bucket.kind_of?(String)
+           @bucket = S3Outlet.s3.buckets[bucket]
+         else
+           @bucket = bucket || S3Outlet.bucket
+         end
        end
 
        def save

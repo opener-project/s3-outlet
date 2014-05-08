@@ -1,11 +1,24 @@
 require 'aws-sdk'
 
+require_relative '../../config/aws'
 require_relative 's3_outlet/s3_output'
 require_relative 's3_outlet/version'
 require_relative 's3_outlet/server'
 
 module Opener
   class S3Outlet
+    attr_reader :options
+
+    def initialize(options={})
+      @options = options
+    end
+
+    def run(input)
+      options[:text] = input
+      S3Output.create(options)
+
+      return input #Return original input so that we can keep on chaining.
+    end
 
     def self.s3
       @s3 ||= AWS::S3.new

@@ -20,6 +20,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'httpclient'
   gem.add_dependency 'uuidtools'
   gem.add_dependency 'opener-webservice'
+  gem.add_dependency 'opener-daemons'
   gem.add_dependency 'aws-sdk'
 
   gem.add_development_dependency 'rspec'
