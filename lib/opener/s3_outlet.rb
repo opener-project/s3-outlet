@@ -1,6 +1,5 @@
 require 'aws-sdk'
 
-require_relative '../../config/aws'
 require_relative 's3_outlet/s3_output'
 require_relative 's3_outlet/version'
 require_relative 's3_outlet/server'
