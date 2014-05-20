@@ -11,7 +11,6 @@ Gem::Specification.new do |gem|
   gem.required_ruby_version = '>= 1.9.2'
 
   gem.files = Dir.glob([
-    'config/**/*',
     'exec/**/*',
     'lib/**/*',
     'config.ru',
