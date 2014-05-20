@@ -3,8 +3,6 @@ require 'nokogiri'
 require 'stringio'
 require_relative './visualizer'
 
-require File.expand_path('../../../../config/aws', __FILE__)
-
 module Opener
   class S3Outlet
     class Server < Sinatra::Base
