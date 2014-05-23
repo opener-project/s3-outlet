@@ -3,6 +3,7 @@ require 'aws-sdk'
 require_relative 's3_outlet/s3_output'
 require_relative 's3_outlet/version'
 require_relative 's3_outlet/server'
+require 'opener/kaf_to_json'
 
 module Opener
   class S3Outlet

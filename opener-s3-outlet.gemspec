@@ -28,6 +28,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'uuidtools'
   gem.add_dependency 'opener-webservice'
   gem.add_dependency 'opener-daemons'
+  gem.add_dependency 'opener-kaf2json'
   gem.add_dependency 'aws-sdk'
   gem.add_dependency 'puma'
 
