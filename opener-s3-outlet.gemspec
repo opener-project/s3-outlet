@@ -18,6 +18,7 @@ Gem::Specification.new do |gem|
     'config.ru',
     '*.gemspec',
     'README.md',
+    'LICENSE.txt',
     'visualizer.rb'
   ]).select { |file| File.file?(file) }
 
