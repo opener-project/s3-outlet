@@ -1,9 +1,13 @@
+require 'securerandom'
+require 'stringio'
+
 require 'aws-sdk'
+require 'nokogiri'
+require 'opener/kaf_to_json'
 
 require_relative 's3_outlet/s3_output'
 require_relative 's3_outlet/version'
 require_relative 's3_outlet/server'
-require 'opener/kaf_to_json'
 
 module Opener
   class S3Outlet
@@ -14,10 +18,11 @@ module Opener
     end
 
     def run(input)
-      options[:text] = input
-      S3Output.create(options)
+      S3Output.create(
+        options.merge(:text => input, :uuid => options[:request_id])
+      )
 
-      return input #Return original input so that we can keep on chaining.
+      return input
     end
 
     def self.s3

@@ -1,5 +1,3 @@
-require 'uuidtools'
-
 module Opener
   class S3Outlet
     class S3Output
@@ -7,7 +5,7 @@ module Opener
        attr_reader :uuid, :text, :dir, :bucket, :params
 
        def initialize(params = {})
-         @uuid     = params.fetch(:uuid) { UUIDTools::UUID.random_create }
+         @uuid     = params[:uuid] || SecureRandom.hex
          @text     = params.fetch(:text)
          @dir      = params.fetch(:directory, S3Outlet.dir)
 
